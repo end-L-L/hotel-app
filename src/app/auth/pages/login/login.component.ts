@@ -39,7 +39,7 @@ export class LoginComponent {
     console.log("user", this.username);
     console.log("password", this.password);
 
-    return this.router.navigate(['/home']);
+    return this.router.navigate(['/hotel']);
   }
 
   public showPassword(){
