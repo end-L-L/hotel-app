@@ -46,31 +46,31 @@ mat-card {
     text-align: center;
     //background-color: rgb(0, 132, 255);
     background-color: #80CBC4;
-  }
+}
   
-  .card-image {
+.card-image {
     width: 50%;
     height: auto;
-  }
+}
   
-  mat-card-title {
+mat-card-title {
     margin-top: 8px;
     margin-bottom: 24px;
     font-size: 32px;
     font-family: Nexa-Bold;
     color: #c2185b;
-  }
+}
   
-  mat-card {
+mat-card {
     transition: transform 0.2s, box-shadow 0.2s;
-  }
+}
   
-  mat-card:hover {
+mat-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
+}
   
-  .card-header-center {
+.card-header-center {
     display: flex;
     justify-content: center;
-  }
+}
