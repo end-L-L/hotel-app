@@ -10,4 +10,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class NavbarComponent {
 
+  public token:string = "";
+
+  public constructor() {}
+
+  public logout() {
+    localStorage.removeItem('token');
+  }
 }
