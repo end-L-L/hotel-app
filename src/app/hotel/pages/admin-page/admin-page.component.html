@@ -16,18 +16,23 @@
     </div>
 
     <div class="container">
-        <div class="cards-container">
-            @for (option of options; track option){
-                <mat-card (click)="navigateTo(option.link)">
-                    <mat-card-header class="card-header-center">
-                        <mat-card-title> {{option.name}} </mat-card-title>
-                    </mat-card-header>
-                   
-                    <mat-card-content>
-                        <img src="{{ option.icon }}" alt="{{ option.name }}" class="card-image" /> 
-                    </mat-card-content>
-                </mat-card>
-            }
-        </div>
+        
+        @if ( showDashboard ) {
+            <div class="cards-container">
+                @for (option of options; track option){
+                    <mat-card (click)="navigateTo(option.link)">
+                        <mat-card-header class="card-header-center">
+                            <mat-card-title> {{option.name}} </mat-card-title>
+                        </mat-card-header>
+                    
+                        <mat-card-content>
+                            <img src="{{ option.icon }}" alt="{{ option.name }}" class="card-image" /> 
+                        </mat-card-content>
+                    </mat-card>
+                }
+            </div>
+        } @else {
+            <router-outlet></router-outlet>
+        }
     </div>
 </div>
