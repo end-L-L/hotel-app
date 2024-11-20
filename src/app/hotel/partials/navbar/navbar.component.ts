@@ -1,4 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FacadeService } from 'src/app/auth/services/facade.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,13 +10,31 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrl: './navbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit{
 
   public token:string = "";
+  public role:string = "";
 
-  public constructor() {}
+  public constructor(
+    private facadeService: FacadeService,
+    private router: Router
+  ) {}
 
-  public logout() {
-    localStorage.removeItem('token');
+  public ngOnInit() {
+    this.token = this.facadeService.getSessionToken();
+    this.role = this.facadeService.getUserGroup();
+  }
+
+  public logout(){
+    this.facadeService.logout().subscribe({
+      next: () => {
+        this.facadeService.destroyUser();
+        localStorage.removeItem('token');
+        this.router.navigate(["/"]);
+      },
+      error: (error: any) => {
+        console.error(error);
+      }
+    });
   }
 }
