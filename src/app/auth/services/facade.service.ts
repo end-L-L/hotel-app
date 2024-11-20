@@ -17,7 +17,7 @@ const user_id_cookie_name = 'hotel-user_id';
 const user_email_cookie_name = 'hotel-user_email';
 const session_cookie_name = 'hotel-user_token';
 const group_name_cookie_name = 'hotel-user_group-name';
-
+const username_cookie_name = 'username';
 @Injectable({
   providedIn: 'root'
 })
@@ -73,7 +73,8 @@ export class FacadeService {
     if(user_data.role == "administrador"){
       console.log("administrador");
       this.cookieService.set(user_id_cookie_name, user_data.id, undefined, undefined, undefined, secure, secure?"None":"Lax");
-      this.cookieService.set(user_email_cookie_name, user_data.email, undefined, undefined, undefined, secure, secure?"None":"Lax");  
+      this.cookieService.set(user_email_cookie_name, user_data.email, undefined, undefined, undefined, secure, secure?"None":"Lax");
+      this.cookieService.set(username_cookie_name, user_data.first_name + " " + user_data.last_name, undefined, undefined, undefined, secure, secure?"None":"Lax");
     }
 
     if(user_data.role == "recepcionista"){
@@ -83,6 +84,7 @@ export class FacadeService {
 
     this.cookieService.set(session_cookie_name, user_data.token, undefined, undefined, undefined, secure, secure?"None":"Lax");
     this.cookieService.set(group_name_cookie_name, user_data.role, undefined, undefined, undefined, secure, secure?"None":"Lax");
+    this.cookieService.set(username_cookie_name, user_data.first_name + " " + user_data.last_name, undefined, undefined, undefined, secure, secure?"None":"Lax");
   }
 
   getUserGroup(){
@@ -91,6 +93,10 @@ export class FacadeService {
 
   getSessionToken(){
     return this.cookieService.get(session_cookie_name);
+  }
+
+  getUsername(){
+    return this.cookieService.get(username_cookie_name);
   }
 
   destroyUser(){

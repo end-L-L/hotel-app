@@ -1,8 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NavbarComponent } from "../../partials/navbar/navbar.component";
 
 // Router
 import { Router} from '@angular/router';
+
+// Facade Service
+import { FacadeService } from '../../../auth/services/facade.service';
 
 // Angular Material
 import { MatCardModule } from '@angular/material/card';
@@ -24,13 +27,18 @@ const MaterialModules = [
   styleUrl: './admin-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminPageComponent {
+export class AdminPageComponent implements OnInit {
 
   public name_user: string = '';
   
   constructor(
+    private facadeService: FacadeService,
     private router: Router
   ) { }
+
+  ngOnInit(): void {
+    this.name_user = this.facadeService.getUsername();
+  }
 
   options = [
     { name: 'Habitaciones', icon: 'assets/icons/hotel-habitaciones.png', link: '/' },
