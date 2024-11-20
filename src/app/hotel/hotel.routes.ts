@@ -7,10 +7,10 @@ export default [
         component: DashboardComponent,
 
         children: [
-            // {
-            //     path: 'books',
-            //     loadComponent: () => import('./pages/view-books/view-books.component').then(m => m.ViewBooksComponent)
-            // },
+            {
+                path: 'rooms',
+                loadComponent: () => import('./pages/rooms-page/rooms-page.component').then(m => m.RoomsPageComponent)
+            },
             {
                 path: '**',
                 redirectTo: ''
