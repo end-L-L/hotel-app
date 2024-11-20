@@ -1,16 +1,17 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AdminPageComponent } from "../admin-page/admin-page.component";
 import { FacadeService } from '../../../auth/services/facade.service';
+import { StaffPageComponent } from "../staff-page/staff-page.component";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [AdminPageComponent],
+  imports: [AdminPageComponent, StaffPageComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
   admin = true;
   role: string = 'administrador';
@@ -20,8 +21,7 @@ export class DashboardComponent {
   ) { }
 
   ngOnInit(): void {
-    //this.role = this.facadeService.getUserGroup();
-    //console.log("Rol: ", this.rol);
+    this.role = this.facadeService.getUserGroup();
   }
 
 }
