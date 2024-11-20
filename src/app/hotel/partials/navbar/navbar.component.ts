@@ -37,4 +37,12 @@ export class NavbarComponent implements OnInit{
       }
     });
   }
+
+  public push(){
+    console.log("Pushed");
+  }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
+  }
 }
