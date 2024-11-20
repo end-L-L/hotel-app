@@ -59,6 +59,13 @@ export class FacadeService {
     return this.http.post<any>(`${environment.API_URL}/api/v1/login`,data);
   }
 
+  logout(): Observable<any> {
+    var headers: any;
+    var token = this.getSessionToken();
+    headers = new HttpHeaders({ 'Content-Type': 'application/json' , 'Authorization': 'Bearer '+token});
+    return this.http.get<any>(`${environment.API_URL}/api/v1/logout`, {headers: headers});
+  }
+
   // session cookie
   saveUserData(user_data:any){
     var secure = environment.API_URL.indexOf("https")!=-1;
@@ -70,11 +77,23 @@ export class FacadeService {
     }
 
     if(user_data.role == "recepcionista"){
-      this.cookieService.set(user_id_cookie_name, user_data.user.id, undefined, undefined, undefined, secure, secure?"None":"Lax");
-      this.cookieService.set(user_email_cookie_name, user_data.user.email, undefined, undefined, undefined, secure, secure?"None":"Lax");
+      this.cookieService.set(user_id_cookie_name, user_data.id, undefined, undefined, undefined, secure, secure?"None":"Lax");
+      this.cookieService.set(user_email_cookie_name, user_data.email, undefined, undefined, undefined, secure, secure?"None":"Lax");
     }
 
     this.cookieService.set(session_cookie_name, user_data.token, undefined, undefined, undefined, secure, secure?"None":"Lax");
     this.cookieService.set(group_name_cookie_name, user_data.role, undefined, undefined, undefined, secure, secure?"None":"Lax");
+  }
+
+  getUserGroup(){
+    return this.cookieService.get(group_name_cookie_name);
+  }
+
+  getSessionToken(){
+    return this.cookieService.get(session_cookie_name);
+  }
+
+  destroyUser(){
+    this.cookieService.deleteAll();
   }
 }
