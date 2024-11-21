@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { FacadeService } from 'src/app/auth/services/facade.service';
 import { HotelService } from '../../services/hotel.service';
 
+import { environment } from '@env/environment'
+
 @Component({
   selector: 'app-rooms-page',
   standalone: true,
@@ -14,6 +16,7 @@ import { HotelService } from '../../services/hotel.service';
 })
 export class RoomsPageComponent implements OnInit {
   
+  public mainUrl = environment.API_URL;
   public token:string = "";
   // public listaHabitaciones: any [] = [];
   public listaHabitaciones: any = {};
