@@ -1,0 +1,19 @@
+<div class="wrapper">
+    <div class="section-home">
+        <div class="body-home">
+            <!-- Home Admin -->
+            @if(this.role == 'administrador'){
+                <section class="home-admin">
+                    <app-admin-page></app-admin-page>
+                </section>
+            }
+
+            <!-- Home Recepcionista -->
+            @if(this.role == 'recepcionista'){
+                <section class="home-recepcionista">
+                    <app-staff-page></app-staff-page>
+                </section>
+            }
+        </div>
+    </div>
+</div>
