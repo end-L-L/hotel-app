@@ -49,6 +49,7 @@ export class AdminPageComponent implements OnInit {
       
       this.router.navigate(['']);
     
+    }else{
             
       this.role = this.facadeService.getUserGroup();
       this.name_user = this.facadeService.getUsername();
