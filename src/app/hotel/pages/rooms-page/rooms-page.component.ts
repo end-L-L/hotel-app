@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { FacadeService } from 'src/app/auth/services/facade.service';
+import { HotelService } from '../../services/hotel.service';
+
 @Component({
   selector: 'app-rooms-page',
   standalone: true,
@@ -11,13 +14,46 @@ import { Router } from '@angular/router';
 })
 export class RoomsPageComponent implements OnInit {
   
+  public token:string = "";
+  // public listaHabitaciones: any [] = [];
+  public listaHabitaciones: any = {};
+
   currentRoute: string | undefined;
-  constructor(private router: Router) {}
+  
+  constructor(
+    private router: Router,
+    private facadeService: FacadeService,
+    private hotelService: HotelService
+  ) {}
 
   ngOnInit() {
-    // Obtén todas las rutas configuradas
-    console.log(this.router.config);
-    this.currentRoute = this.router.url;
-    console.log('Ruta actual:', this.currentRoute);
+    this.token = this.facadeService.getSessionToken();
+
+    if(this.token == ""){
+      this.router.navigate(['']);
+    }else{
+      this.obtenerHabitaciones();
+    }
+  }
+
+  public obtenerHabitaciones(){
+    this.hotelService.getHabitaciones().subscribe({
+      next: (response)=>{
+        console.log(response);
+        this.listaHabitaciones = response;
+        console.log(this.listaHabitaciones);
+      },
+      error: (error)=>{
+        alert("¡Error!: Lista no Obtenida");
+      }
+    });
+  }
+
+  public goEditar(id: number){
+    this.router.navigate(['rooms/edit/'+id]);
+  }
+
+  public goEliminar(id: number){
+    this.router.navigate(['rooms/delete/'+id]);
   }
 }
