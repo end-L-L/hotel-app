@@ -1,6 +1,8 @@
 .wrapper{
     width: 100vw;
-    height: 90vh;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .header-home{
@@ -36,9 +38,9 @@
 
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 16px;
-    margin: 16px;
+    margin: 64px;
 }
 
 mat-card {
