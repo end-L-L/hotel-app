@@ -65,7 +65,7 @@ export class AdminPageComponent implements OnInit {
 
   options = [
     { name: 'Habitaciones', icon: 'assets/icons/hotel-habitaciones.png', link: '/hotel/rooms' },
-    { name: 'Tipo de Habitaciones', icon: 'assets/icons/hotel-tipo.png', link: '/' },
+    { name: 'Tipos de Habitación', icon: 'assets/icons/hotel-tipo.png', link: '/hotel/roomTypes' },
     { name: 'Reservas', icon: 'assets/icons/hotel-reserva.png', link: '/' },
     { name: 'Añadir Reserva', icon: 'assets/icons/hotel-añadir-reserva.png', link: '/' },
     { name: 'Gestión de Clientes', icon: 'assets/icons/hotel-clientes.png', link: '/' },

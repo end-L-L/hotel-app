@@ -12,6 +12,10 @@ export default [
                 loadComponent: () => import('./pages/rooms-page/rooms-page.component').then(m => m.RoomsPageComponent)
             },
             {
+                path: 'roomTypes',
+                loadComponent: () => import('./pages/room-types-page/room-types-page.component').then(m => m.RoomTypesPageComponent)
+            },
+            {
                 path: '**',
                 redirectTo: ''
             }

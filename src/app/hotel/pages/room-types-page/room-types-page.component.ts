@@ -3,41 +3,39 @@ import { Router } from '@angular/router';
 
 // angular material
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 
 // services
 import { FacadeService } from 'src/app/auth/services/facade.service';
 import { HotelService } from '../../services/hotel.service';
-import { environment } from '@env/environment'
+import { environment } from '@env/environment';
 
 @Component({
-  selector: 'app-rooms-page',
+  selector: 'app-room-types-page',
   standalone: true,
   imports: [
     MatTableModule,
     MatPaginator
   ],
-  templateUrl: './rooms-page.component.html',
-  styleUrl: './rooms-page.component.scss',
+  templateUrl: './room-types-page.component.html',
+  styleUrl: './room-types-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RoomsPageComponent implements OnInit {
+export class RoomTypesPageComponent implements OnInit {
   
   public mainUrl = environment.API_URL;
-  currentRoute: string | undefined;
-  
   public token:string = "";
-  public listaHabitaciones: any [] = [];
+  public tiposHabitaciones: any [] = [];
   public role: string = "";
   public dataColumns:string[] | undefined;
 
   displayedColumns: string[] = [];
-  dataSourceHabitacion = new MatTableDataSource<DatosHabitacion>(this.listaHabitaciones as DatosHabitacion[]);
+  dataSourceTipoHabitacion = new MatTableDataSource<DatosTipoHabitacion>(this.tiposHabitaciones as DatosTipoHabitacion[]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.dataSourceHabitacion.paginator = this.paginator;
+    this.dataSourceTipoHabitacion.paginator = this.paginator;
   }
 
   constructor(
@@ -60,15 +58,14 @@ export class RoomsPageComponent implements OnInit {
   }
 
   public obtenerHabitaciones(){
-    this.hotelService.getHabitaciones().subscribe({
+    this.hotelService.getTiposHabitaciones().subscribe({
       next: (response)=>{
-        console.log(response);
-        this.listaHabitaciones = response;
-        console.log(this.listaHabitaciones);
-
-        if(this.listaHabitaciones.length > 0){
-          this.dataSourceHabitacion = new MatTableDataSource<DatosHabitacion>(this.listaHabitaciones as DatosHabitacion[]);
+        
+        this.tiposHabitaciones = response;
+        if(this.tiposHabitaciones.length > 0){
+          this.dataSourceTipoHabitacion = new MatTableDataSource<DatosTipoHabitacion>(this.tiposHabitaciones as DatosTipoHabitacion[]);
         }
+
       },
       error: (error)=>{
         alert("¡Error!: Lista no Obtenida");
@@ -77,28 +74,27 @@ export class RoomsPageComponent implements OnInit {
   }
 
   public goEditar(id: number){
-    this.router.navigate(['rooms/edit/'+id]);
+    //this.router.navigate(['rooms/edit/'+id]);
+    console.log("Editar: "+id);
   }
 
   public goEliminar(id: number){
-    this.router.navigate(['rooms/delete/'+id]);
+    //this.router.navigate(['rooms/delete/'+id]);
   }
 
-  // Función Para Mostrar Columnas
   public mostrarColumnas(){
     if(this.role == "administrador"){
-      this.displayedColumns = ['id', 'imagen', 'número', 'tipo', 'precio', 'disponible', 'editar', 'eliminar'];
+      this.displayedColumns = ['id', 'imagen', 'tipo', 'descripcion', 'editar', 'eliminar'];
     }else if(this.role == "recepcionista"){
-      this.displayedColumns = ['id', 'imagen', 'número', 'tipo', 'precio', 'disponible'];
+      this.displayedColumns = ['id', 'imagen', 'tipo', 'descripcion'];
     }
   }
-  
 
-  // Paginador
+  // paginador
   public initPaginator(){
     setTimeout(() => {
-      this.dataSourceHabitacion.paginator = this.paginator;
-      this.paginator._intl.itemsPerPageLabel = 'Registros por página';
+      this.dataSourceTipoHabitacion.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = '# de Registros';
       this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
         if (length === 0 || pageSize === 0) {
           return `0 / ${length}`;
@@ -116,11 +112,9 @@ export class RoomsPageComponent implements OnInit {
   }
 }
 
-export interface DatosHabitacion {
+export interface DatosTipoHabitacion {
   id: number;
-  numero: number;
   tipo: string;
-  precio: number;
-  disponible: boolean;
+  descripcion: string;
   imagen: string;
 }

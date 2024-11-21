@@ -65,9 +65,9 @@ export class StaffPageComponent implements OnInit {
 
   options = [
     { name: 'Habitaciones', icon: 'assets/icons/hotel-habitaciones.png', link: '/hotel/rooms' },
-    { name: 'Reservas', icon: 'assets/icons/hotel-reserva.png', link: '/' },
-    { name: 'Añadir Reserva', icon: 'assets/icons/hotel-añadir-reserva.png', link: '/' },
-    { name: 'Ajustes', icon: 'assets/icons/hotel-ajustes.png', link: '/' },
+    { name: 'Reservas', icon: 'assets/icons/hotel-reserva.png', link: '/hotel/' },
+    { name: 'Añadir Reserva', icon: 'assets/icons/hotel-añadir-reserva.png', link: '/hotel/' },
+    { name: 'Ajustes', icon: 'assets/icons/hotel-ajustes.png', link: '/hotel/' },
   ];
 
   navigateTo(route: string) {

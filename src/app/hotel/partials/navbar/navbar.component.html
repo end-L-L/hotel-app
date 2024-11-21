@@ -20,7 +20,7 @@
                         
                         @if(this.role == 'administrador'){
                             <li class="nav-item">
-                                <a class="nav-link" routerLink="/" routerLinkActive="active">Tipo de Habitaciones</a>
+                                <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="push()" (click)="navigateTo('/hotel/roomTypes')" >Tipos de Habitación</a>
                             </li>
                         }
 
