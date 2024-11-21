@@ -11,16 +11,16 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <ng-container>
                         <li class="nav-item">
-                            <a class="nav-link" routerLink="/" routerLinkActive="active">Inicio</a>
+                            <a class="nav-link" routerLink="/hotel" routerLinkActive="active" (click)="push()" (click)="navigateTo('/hotel')" >Inicio</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" routerLink="/" routerLinkActive="active">Habitaciones</a>
+                            <a class="nav-link" routerLink="/hotel/rooms" routerLinkActive="active" (click)="push()" (click)="navigateTo('/hotel/rooms')" >Habitaciones</a>
                         </li>
                         
                         @if(this.role == 'administrador'){
                             <li class="nav-item">
-                                <a class="nav-link" routerLink="/" routerLinkActive="active">Tipo de Habitaciones</a>
+                                <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="push()" (click)="navigateTo('/hotel/roomTypes')" >Tipos de Habitación</a>
                             </li>
                         }
 
