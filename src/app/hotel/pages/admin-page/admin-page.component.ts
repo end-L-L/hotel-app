@@ -32,7 +32,9 @@ export class AdminPageComponent implements OnInit {
 
   public name_user: string = '';
   showDashboard: boolean = true;
-  currentRoute: string | undefined;
+
+  public token:string = "";
+  public role: string = "";
 
   constructor(
     private facadeService: FacadeService,
@@ -41,19 +43,23 @@ export class AdminPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.name_user = this.facadeService.getUsername();
+    this.token = this.facadeService.getSessionToken();
 
-    this.showDashboard = this.router.url === '/hotel';
+    if(this.token == ""){
+      
+      this.router.navigate(['']);
     
-    console.log(this.router.config);
-    this.currentRoute = this.router.url;
-    console.log('Ruta actual:', this.currentRoute);
-
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.showDashboard = event.url === '/hotel';
-      }
-    });
+            
+      this.role = this.facadeService.getUserGroup();
+      this.name_user = this.facadeService.getUsername();
+      
+      this.showDashboard = this.router.url === '/hotel';
+      this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this.showDashboard = event.url === '/hotel';
+        }
+      });
+    }
   }
 
   options = [
@@ -71,5 +77,4 @@ export class AdminPageComponent implements OnInit {
     this.router.navigate([route]);
     console.log(route);
   }
-
 }
