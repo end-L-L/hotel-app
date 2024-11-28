@@ -16,6 +16,10 @@ export default [
                 loadComponent: () => import('./pages/room-types-page/room-types-page.component').then(m => m.RoomTypesPageComponent)
             },
             {
+                path: 'booking-form',
+                loadComponent: () => import('./pages/booking-form-page/booking-form-page.component').then(m => m.BookingFormPageComponent)
+            },
+            {
                 path: '**',
                 redirectTo: ''
             }

@@ -15,12 +15,12 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" routerLink="/hotel/rooms" routerLinkActive="active" (click)="push()" (click)="navigateTo('/hotel/rooms')" >Habitaciones</a>
+                            <a class="nav-link" routerLink="/hotel/rooms" routerLinkActive="active" (click)="navigateTo('/hotel/rooms')" >Habitaciones</a>
                         </li>
                         
                         @if(this.role == 'administrador'){
                             <li class="nav-item">
-                                <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="push()" (click)="navigateTo('/hotel/roomTypes')" >Tipos de Habitación</a>
+                                <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="navigateTo('/hotel/roomTypes')" >Tipos de Habitación</a>
                             </li>
                         }
 
@@ -29,7 +29,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" routerLink="/" routerLinkActive="active">Añadir Reserva</a>
+                            <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="navigateTo('/hotel/booking-form')">Gestionar Reserva</a>
                         </li>
 
                         @if(this.role == 'administrador'){

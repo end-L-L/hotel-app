@@ -1,0 +1,125 @@
+<div class='wrapper'>
+
+  <!-- Left Section -->
+  <div class="section-left">
+
+    <div class="title-container">
+      <span class="title">Reserva</span>
+    </div>
+
+    <div class="form-group">
+      <mat-radio-group [(ngModel)]="opcion">
+        <mat-radio-button value="habitual">Cliente Habitual</mat-radio-button>
+        <mat-radio-button value="esporadico">Cliente Esporadico</mat-radio-button>
+        <mat-radio-button value="eliminar">Eliminar Reserva</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    @if( opcion === 'habitual' ){
+      <!-- cliente habitual -->
+      <ng-container>
+        <div class="content-container">
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Número de Identificación</mat-label>
+            <input matInput type="number" [(ngModel)]="infoCliente.cliente" placeholder="Identificación" required />
+          </mat-form-field>
+
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Número de Habitación</mat-label>
+            <input matInput type="number" [(ngModel)]="infoCliente.habitacion" placeholder="Habitación" required />
+          </mat-form-field>
+          
+          <!-- reutilizar -->
+          <mat-form-field>
+            <mat-label>Ingresa la(s) Fecha(s)</mat-label>
+            <mat-date-range-input [rangePicker]="picker" [min]="minDate">
+              <input matStartDate placeholder="Fecha de Inicio"  #dateRangeStart>
+              <input matEndDate placeholder="Fecha de Fin" #dateRangeEnd (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+      </ng-container>
+    } 
+    
+    @if( opcion === 'esporadico' ) {
+      <!-- cliente esporádico -->
+      <ng-container>
+        <div class="content-container">
+          
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Número de Habitación</mat-label>
+            <input matInput [(ngModel)]="infoCliente.habitacion" placeholder="Habitación" required />
+          </mat-form-field>
+          
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput [(ngModel)]="infoCliente.nombre" placeholder="Nombre">
+          </mat-form-field>
+
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Correo Electrónico</mat-label>
+            <input matInput [(ngModel)]="infoCliente.email" placeholder="Correo Electrónico">
+          </mat-form-field>
+
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input matInput [(ngModel)]="infoCliente.telefono" placeholder="Teléfono">
+          </mat-form-field>
+
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Número de Identificación</mat-label>
+            <input matInput [(ngModel)]="infoCliente.cliente" placeholder="Identificación" required />
+          </mat-form-field>
+
+            <!-- reutilizar -->
+          <mat-form-field>
+            <mat-label>Ingresa la(s) Fecha(s)</mat-label>
+            <mat-date-range-input [rangePicker]="picker" [min]="minDate">
+              <input matStartDate placeholder="Fecha de Inicio"  #dateRangeStart>
+              <input matEndDate placeholder="Fecha de Fin" #dateRangeEnd (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+
+        </div>
+      </ng-container>
+    }
+
+    @if( opcion === 'eliminar' ){
+      <ng-container>
+        <div class="content-container">
+          <mat-form-field class="mat-input" appearance="outline">
+            <mat-label>Número de Habitación</mat-label>
+            <input matInput type="number" [(ngModel)]="infoCliente.habitacion" placeholder="Habitación" required />
+          </mat-form-field>
+        </div>
+      </ng-container>  
+    }
+
+    @if( opcion != 'eliminar'){
+      <div class="botones">
+        <button mat-raised-button type="submit" (click)="calcularPrecio()">Calcular Precio</button>
+        <button mat-raised-button type="submit" (click)="registrarReserva()">Registrar Reserva</button>
+      </div>
+    } @else {
+      <div class="botones">
+        <button mat-raised-button type="submit" (click)="eliminarReserva()">Eliminar Reserva</button>
+      </div>
+    }
+    
+  </div>
+
+  <!-- Right Section -->
+  <div class="section-right">
+
+    <div class="title-container">
+      <span class="title">Respuesta</span>
+    </div>
+
+  </div>
+</div>

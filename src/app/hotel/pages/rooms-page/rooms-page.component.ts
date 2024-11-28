@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -14,6 +15,7 @@ import { environment } from '@env/environment'
   selector: 'app-rooms-page',
   standalone: true,
   imports: [
+    CommonModule,
     MatTableModule,
     MatPaginator
   ],
