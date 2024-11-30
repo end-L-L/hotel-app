@@ -31,4 +31,18 @@ export class HotelService {
   public getTiposHabitaciones (): Observable <any>{
     return this.http.get<any>(`${environment.API_URL}/api/v1/hotel/tipo-habitacion`, httpOptions);
   }
+
+  public getCostoReservacion(data: any): Observable <any>{
+    return this.http.post<any>(`${environment.API_URL}/api/v1/hotel/costo-reservacion`,data, httpOptions);
+  }
+
+  public postReservacion(data: any): Observable <any>{
+    return this.http.post<any>(`${environment.API_URL}/api/v1/hotel/reservacion`,data, httpOptions);
+  }
+
+  public deleteReservacion(id: number): Observable<any> {
+    return this.http.delete<any>(`${environment.API_URL}/api/v1/hotel/eliminar-reservacion/${id}`);
+  }
+  
+
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule, FormGroup } from '@angular/forms';
 import {provideNativeDateAdapter} from '@angular/material/core';
 
@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
+import { HotelService } from '../../services/hotel.service';
 
 const ANGULAR_MATERIAL = [
   FormsModule,
@@ -38,7 +39,10 @@ const ANGULAR_MATERIAL = [
 })
 export class BookingFormPageComponent implements OnInit{
 
-  constructor() {}
+  constructor(
+    private hotelService: HotelService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.minDate = new Date();
@@ -47,7 +51,14 @@ export class BookingFormPageComponent implements OnInit{
   minDate = new Date();
   infoCliente: any = {};
   opcion: string = 'habitual';
-  fecha_entrada: string = '';
+  respuesta: any = {};
+  tipoInformacion: string = ''; // 'costo' | 'reserva'
+  pago: string | undefined;
+
+  estados:any[]= [
+    {value: '1', viewValue: 'Si'},
+    {value: '2', viewValue: 'No'}
+  ];
 
 
   dateRangeChange(dateRangeStart: HTMLInputElement, dateRangeEnd: HTMLInputElement) {
@@ -71,14 +82,59 @@ export class BookingFormPageComponent implements OnInit{
   }
 
   calcularPrecio() {
-    console.log('Calculando precio...');
+    this.tipoInformacion = 'costo';
+    
+    if(this.opcion === 'esporadico') {
+      this.infoCliente.cliente = 0;
+    }
+
+    this.hotelService.getCostoReservacion(this.infoCliente).subscribe({
+      next: (response) => {
+        this.loadData(response);
+      },
+      error: (error) => {
+        alert(error.error.detail);
+      }
+    });    
   }
   
   registrarReserva() {
-    console.log('Reserva registrada', this.infoCliente);
+    
+    let valor : boolean = false;
+    
+    if(this.pago == '1'){
+      this.infoCliente.pagado = true;
+    } else {
+      this.infoCliente.pagado = false;
+    }
+    
+    this.tipoInformacion = 'reserva';
+    this.hotelService.postReservacion(this.infoCliente).subscribe({
+      next: (response) => {
+        this.loadData(response);
+        alert('Reservación Registrada');
+      },
+      error: (error) => {
+        alert(error.error.error);
+      }
+    });
   }
 
-  eliminarReserva() {}
+  eliminarReserva() {
+    this.hotelService.deleteReservacion(this.infoCliente.habitacion).subscribe({
+      next: (response) => {
+        alert('Reservación Eliminada');
+      },
+      error: (error) => {
+        alert(error.error.error);
+      }
+    });
+  }
+
+  public loadData(data: any){
+    this.respuesta = data;
+    this.cdr.detectChanges();
+  }
 }
 
 
