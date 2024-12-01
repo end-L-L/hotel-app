@@ -20,6 +20,10 @@ export default [
                 loadComponent: () => import('./pages/booking-form-page/booking-form-page.component').then(m => m.BookingFormPageComponent)
             },
             {
+                path: 'bookings',
+                loadComponent: () => import('./pages/bookings-page/bookings-page.component').then(m => m.BookingsPageComponent)
+            },
+            {
                 path: '**',
                 redirectTo: ''
             }

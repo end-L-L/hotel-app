@@ -44,5 +44,7 @@ export class HotelService {
     return this.http.delete<any>(`${environment.API_URL}/api/v1/hotel/eliminar-reservacion/${id}`);
   }
   
-
+  public getReservaciones (): Observable <any>{
+    return this.http.get<any>(`${environment.API_URL}/api/v1/hotel/resumen-reservaciones`, httpOptions);
+  }
 }
