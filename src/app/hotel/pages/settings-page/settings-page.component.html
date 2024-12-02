@@ -1,0 +1,61 @@
+<div class="container">
+  <h2 class="title">Configuraciones</h2>
+  <div class="cards-container">
+
+    <mat-card class="primary-card">
+      <span>Configuración de Precios</span>
+      <br>
+
+      @for (habitacion of infoHabitaciones; track habitacion) {
+        <span>{{habitacion.tipo}}: ${{habitacion.precio}}</span>
+      }
+
+      <br />
+      <mat-form-field>
+        <mat-label>Seleccione</mat-label>
+        <mat-select [(ngModel)]="precioConfig.tipo_id">
+          @for (habitacion of infoHabitaciones; track habitacion) {
+            <mat-option [value]="habitacion.tipo_id">{{habitacion.tipo}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Nuevo Precio</mat-label>
+        <input matInput [(ngModel)]="precioConfig.precio" placeholder="$"/>
+      </mat-form-field>
+      <button mat-raised-button type="submit" (click)="updatePrecio()">Configurar</button>
+    </mat-card>
+
+    <mat-card class="secondary-card">
+      <span>Descuento Cliente Habitual</span>
+      <br>
+      <span>Descuento: %{{infoDescuento.descuento}}</span>
+      <br />
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Nuevo Descuento</mat-label>
+        <input matInput [(ngModel)]="descuento" placeholder="%"/>
+      </mat-form-field>
+      <button mat-raised-button type="submit" (click)="updateDescuento()">Configurar</button>
+    </mat-card>
+
+    <mat-card class="secondary-card">
+      <span>Calcular Ganancias</span>
+      <br />
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Año</mat-label>
+        <input matInput [(ngModel)]="ganancias_anio" placeholder="2024"/>
+      </mat-form-field>
+
+      <mat-form-field class="mat-input" appearance="outline">
+        <mat-label>Mes</mat-label>
+        <input matInput [(ngModel)]="ganancias_mes" placeholder="Escriba 1 - 12"/>
+      </mat-form-field>
+
+      <span>Ganancias ${{infoGanancias.ganancias}}</span>
+
+      <button mat-raised-button type="submit" (click)="mesGanancias()">Configurar</button>
+    </mat-card>
+  </div>
+</div>
