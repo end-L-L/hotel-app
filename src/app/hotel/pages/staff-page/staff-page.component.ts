@@ -40,7 +40,6 @@ export class StaffPageComponent implements OnInit {
     private router: Router
   ) { }
 
-
   ngOnInit(): void {
 
     this.token = this.facadeService.getSessionToken();
@@ -65,8 +64,8 @@ export class StaffPageComponent implements OnInit {
 
   options = [
     { name: 'Habitaciones', icon: 'assets/icons/hotel-habitaciones.png', link: '/hotel/rooms' },
-    { name: 'Reservas', icon: 'assets/icons/hotel-reserva.png', link: '/hotel/' },
-    { name: 'Añadir Reserva', icon: 'assets/icons/hotel-añadir-reserva.png', link: '/hotel/' },
+    { name: 'Reservas', icon: 'assets/icons/hotel-reserva.png', link: '/hotel/bookings' },
+    { name: 'Gestionar Reserva', icon: 'assets/icons/hotel-añadir-reserva.png', link: '/hotel/booking-form' },
     { name: 'Ajustes', icon: 'assets/icons/hotel-ajustes.png', link: '/hotel/' },
   ];
 

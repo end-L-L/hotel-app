@@ -66,12 +66,11 @@ export class AdminPageComponent implements OnInit {
   options = [
     { name: 'Habitaciones', icon: 'assets/icons/hotel-habitaciones.png', link: '/hotel/rooms' },
     { name: 'Tipos de Habitación', icon: 'assets/icons/hotel-tipo.png', link: '/hotel/roomTypes' },
-    { name: 'Reservas', icon: 'assets/icons/hotel-reserva.png', link: '/' },
-    { name: 'Añadir Reserva', icon: 'assets/icons/hotel-añadir-reserva.png', link: '/' },
-    { name: 'Gestión de Clientes', icon: 'assets/icons/hotel-clientes.png', link: '/' },
-    { name: 'Gestión de Empleados', icon: 'assets/icons/hotel-empleados.png', link: '/' },
-    { name: 'Estadísticas', icon: 'assets/icons/hotel-stats.png', link: '/' },
-    { name: 'Ajustes', icon: 'assets/icons/hotel-ajustes.png', link: '/' },
+    { name: 'Reservas', icon: 'assets/icons/hotel-reserva.png', link: '/hotel/bookings' },
+    { name: 'Gestionar Reserva', icon: 'assets/icons/hotel-añadir-reserva.png', link: '/hotel/booking-form' },
+    { name: 'Gestión de Clientes', icon: 'assets/icons/hotel-clientes.png', link: '/hotel' },
+    { name: 'Gestión de Empleados', icon: 'assets/icons/hotel-empleados.png', link: '/hotel' },
+    { name: 'Ajustes', icon: 'assets/icons/hotel-ajustes.png', link: '/hotel/settings' },
   ];
 
   navigateTo(route: string) {

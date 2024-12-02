@@ -1,52 +1,45 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 // angular material
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 
-// services
 import { FacadeService } from 'src/app/auth/services/facade.service';
 import { HotelService } from '../../services/hotel.service';
-import { environment } from '@env/environment'
 
 @Component({
-  selector: 'app-rooms-page',
+  selector: 'app-bookings-page',
   standalone: true,
   imports: [
-    CommonModule,
     MatTableModule,
     MatPaginator
   ],
-  templateUrl: './rooms-page.component.html',
-  styleUrl: './rooms-page.component.scss',
+  templateUrl: './bookings-page.component.html',
+  styleUrl: './bookings-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RoomsPageComponent implements OnInit {
-  
-  public mainUrl = environment.API_URL;
-  currentRoute: string | undefined;
-  
+export class BookingsPageComponent implements OnInit {
+
   public token:string = "";
-  public listaHabitaciones: any [] = [];
+  public datosReservaciones: any [] = [];
   public role: string = "";
   public dataColumns:string[] | undefined;
 
   displayedColumns: string[] = [];
-  dataSourceHabitacion = new MatTableDataSource<DatosHabitacion>(this.listaHabitaciones as DatosHabitacion[]);
+  dataSourceDatosReservaciones = new MatTableDataSource<DatosReservacion>(this.datosReservaciones as DatosReservacion[]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    this.dataSourceHabitacion.paginator = this.paginator;
+    this.dataSourceDatosReservaciones.paginator = this.paginator;
   }
 
   constructor(
     private router: Router,
     private facadeService: FacadeService,
     private hotelService: HotelService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.token = this.facadeService.getSessionToken();
@@ -55,22 +48,21 @@ export class RoomsPageComponent implements OnInit {
       this.router.navigate(['']);
     }else{
       this.role = this.facadeService.getUserGroup();
-      this.obtenerHabitaciones();
+      this.obtenerReservaciones();
       this.initPaginator();
       this.mostrarColumnas();
     }
   }
 
-  public obtenerHabitaciones(){
-    this.hotelService.getHabitaciones().subscribe({
+  obtenerReservaciones(){
+    this.hotelService.getReservaciones().subscribe({
       next: (response)=>{
-        console.log(response);
-        this.listaHabitaciones = response;
-        console.log(this.listaHabitaciones);
-
-        if(this.listaHabitaciones.length > 0){
-          this.dataSourceHabitacion = new MatTableDataSource<DatosHabitacion>(this.listaHabitaciones as DatosHabitacion[]);
+        
+        this.datosReservaciones = response;
+        if(this.datosReservaciones.length > 0){
+          this.dataSourceDatosReservaciones = new MatTableDataSource<DatosReservacion>(this.datosReservaciones as DatosReservacion[]);
         }
+
       },
       error: (error)=>{
         alert("¡Error!: Lista no Obtenida");
@@ -78,29 +70,27 @@ export class RoomsPageComponent implements OnInit {
     });
   }
 
-  public goEditar(id: number){
-    this.router.navigate(['rooms/edit/'+id]);
+  goEditar(id: number){
+    console.log(id);
   }
 
-  public goEliminar(id: number){
-    this.router.navigate(['rooms/delete/'+id]);
+  goEliminar(id: number){
+    console.log(id);
   }
 
-  // Función Para Mostrar Columnas
   public mostrarColumnas(){
     if(this.role == "administrador"){
-      this.displayedColumns = ['id', 'imagen', 'número', 'tipo', 'precio', 'disponible', 'editar', 'eliminar'];
+      this.displayedColumns = ['id', 'cliente', 'nombre', 'habitacion', 'fecha_entrada', 'fecha_salida', 'total', 'pagado', 'editar', 'eliminar'];
     }else if(this.role == "recepcionista"){
-      this.displayedColumns = ['id', 'imagen', 'número', 'tipo', 'precio', 'disponible'];
+      this.displayedColumns = ['id', 'cliente', 'nombre', 'habitacion', 'fecha_entrada', 'fecha_salida', 'total', 'pagado'];
     }
   }
-  
 
-  // Paginador
+  // paginador
   public initPaginator(){
     setTimeout(() => {
-      this.dataSourceHabitacion.paginator = this.paginator;
-      this.paginator._intl.itemsPerPageLabel = 'Registros por página';
+      this.dataSourceDatosReservaciones.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = '# de Registros';
       this.paginator._intl.getRangeLabel = (page: number, pageSize: number, length: number) => {
         if (length === 0 || pageSize === 0) {
           return `0 / ${length}`;
@@ -118,11 +108,13 @@ export class RoomsPageComponent implements OnInit {
   }
 }
 
-export interface DatosHabitacion {
+export interface DatosReservacion {
   id: number;
-  numero: number;
-  tipo: string;
+  cliente: string;
+  nombre: string;
+  habitacion: string;
+  fecha_entrada: string;
+  fecha_salida: string;
   precio: number;
-  disponible: boolean;
-  imagen: string;
+  pagado: boolean;
 }

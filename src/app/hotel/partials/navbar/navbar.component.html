@@ -15,21 +15,21 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" routerLink="/hotel/rooms" routerLinkActive="active" (click)="push()" (click)="navigateTo('/hotel/rooms')" >Habitaciones</a>
+                            <a class="nav-link" routerLink="/hotel/rooms" routerLinkActive="active" (click)="navigateTo('/hotel/rooms')" >Habitaciones</a>
                         </li>
                         
                         @if(this.role == 'administrador'){
                             <li class="nav-item">
-                                <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="push()" (click)="navigateTo('/hotel/roomTypes')" >Tipos de Habitación</a>
+                                <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="navigateTo('/hotel/roomTypes')" >Tipos de Habitación</a>
                             </li>
                         }
 
                         <li class="nav-item">
-                            <a class="nav-link" routerLink="/" routerLinkActive="active">Reservas</a>
+                            <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="navigateTo('/hotel/bookings')">Reservas</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" routerLink="/" routerLinkActive="active">Añadir Reserva</a>
+                            <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="navigateTo('/hotel/booking-form')">Gestionar Reserva</a>
                         </li>
 
                         @if(this.role == 'administrador'){
@@ -40,15 +40,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" routerLink="/" routerLinkActive="active">Gestión de Empleados</a>
                             </li>
-
                             <li class="nav-item">
-                                <a class="nav-link" routerLink="/" routerLinkActive="active">Estadísticas</a>
+                                <a class="nav-link" routerLink="/" routerLinkActive="active" (click)="navigateTo('/hotel/settings')">Ajustes</a>
                             </li>
                         }
 
-                        <li class="nav-item">
-                            <a class="nav-link" routerLink="/" routerLinkActive="active">Ajustes</a>
-                        </li>
                         
                     </ng-container>
                 </ul>
