@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavbarComponent } from "../../partials/navbar/navbar.component";
 
 // Router
@@ -31,47 +31,53 @@ const MaterialModules = [
 export class AdminPageComponent implements OnInit {
 
   public name_user: string = '';
-  showDashboard: boolean = true;
-
+  public showDashboard: boolean = true;
   public token:string = "";
   public role: string = "";
-
-  constructor(
-    private facadeService: FacadeService,
-    private router: Router
-  ) { }
-
-  ngOnInit(): void {
-
-    this.token = this.facadeService.getSessionToken();
-
-    if(this.token == ""){
-      
-      this.router.navigate(['']);
-    
-    }else{
-            
-      this.role = this.facadeService.getUserGroup();
-      this.name_user = this.facadeService.getUsername();
-      
-      this.showDashboard = this.router.url === '/hotel';
-      this.router.events.subscribe((event) => {
-        if (event instanceof NavigationEnd) {
-          this.showDashboard = event.url === '/hotel';
-        }
-      });
-    }
-  }
 
   options = [
     { name: 'Habitaciones', icon: 'assets/icons/hotel-habitaciones.png', link: '/hotel/rooms' },
     { name: 'Tipos de Habitación', icon: 'assets/icons/hotel-tipo.png', link: '/hotel/roomTypes' },
     { name: 'Reservas', icon: 'assets/icons/hotel-reserva.png', link: '/hotel/bookings' },
     { name: 'Gestionar Reserva', icon: 'assets/icons/hotel-añadir-reserva.png', link: '/hotel/booking-form' },
-    { name: 'Gestión de Clientes', icon: 'assets/icons/hotel-clientes.png', link: '/hotel' },
-    { name: 'Gestión de Empleados', icon: 'assets/icons/hotel-empleados.png', link: '/hotel' },
+    //{ name: 'Gestión de Clientes', icon: 'assets/icons/hotel-clientes.png', link: '/hotel' },
+    //{ name: 'Gestión de Empleados', icon: 'assets/icons/hotel-empleados.png', link: '/hotel' },
     { name: 'Ajustes', icon: 'assets/icons/hotel-ajustes.png', link: '/hotel/settings' },
   ];
+
+  constructor(
+    private facadeService: FacadeService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) { }
+
+  ngOnInit(): void {
+    this.token = this.facadeService.getSessionToken();
+
+    if (this.token === '') {
+      this.router.navigate(['']);
+    } else {
+      this.role = this.facadeService.getUserGroup();
+      this.name_user = this.facadeService.getUsername();
+
+      this.updateShowDashboard(this.router.url);
+
+      this.router.events.subscribe((event) => {
+        if (event instanceof NavigationEnd) {
+          this.updateShowDashboard(event.url);
+        }
+      });
+    }
+  }
+
+  updateShowDashboard(url: string): void {
+    this.showDashboard = url === '/hotel';
+    this.cdr.markForCheck(); // Asegura que se detecten los cambios
+  }
+
+  // trackByOption(index: number, option: any): any {
+  //   return option.link;
+  // }
 
   navigateTo(route: string) {
     this.router.navigate([route]);

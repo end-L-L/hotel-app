@@ -28,16 +28,7 @@
             <mat-label>Número de Habitación</mat-label>
             <input matInput [(ngModel)]="infoCliente.habitacion" placeholder="Habitación" required />
           </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>Pagado</mat-label>
-            <mat-select [(ngModel)]="pago">
-              @for (estado of estados; track estado) {
-                <mat-option [value]="estado.value">{{estado.viewValue}}</mat-option>
-              }
-            </mat-select>
-          </mat-form-field>
-          
+        
           <!-- reutilizar -->
           <mat-form-field>
             <mat-label>Ingresa la(s) Fecha(s)</mat-label>
@@ -49,7 +40,17 @@
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
           </mat-form-field>
+          <br>
+          <mat-form-field>
+            <mat-label>Pagado</mat-label>
+            <mat-select [(ngModel)]="pago">
+              @for (estado of estados; track estado) {
+                <mat-option [value]="estado.value">{{estado.viewValue}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         </div>
+        
       </ng-container>
     } 
     

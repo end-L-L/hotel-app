@@ -68,6 +68,11 @@ export class RoomsPageComponent implements OnInit {
         this.listaHabitaciones = response;
         console.log(this.listaHabitaciones);
 
+        this.listaHabitaciones = response.map((habitacion: { tipo: number; }) => ({
+        ...habitacion,
+        tipo: this.getTipoHabitacion(habitacion.tipo)
+        }));
+        
         if(this.listaHabitaciones.length > 0){
           this.dataSourceHabitacion = new MatTableDataSource<DatosHabitacion>(this.listaHabitaciones as DatosHabitacion[]);
         }
@@ -79,11 +84,13 @@ export class RoomsPageComponent implements OnInit {
   }
 
   public goEditar(id: number){
-    this.router.navigate(['rooms/edit/'+id]);
+    //this.router.navigate(['rooms/edit/'+id]);
+    this.router.navigate(['hotel/rooms/']);
   }
 
   public goEliminar(id: number){
-    this.router.navigate(['rooms/delete/'+id]);
+    // this.router.navigate(['rooms/delete/'+id]);
+    this.router.navigate(['hotel/rooms/']);
   }
 
   // Función Para Mostrar Columnas
@@ -116,12 +123,21 @@ export class RoomsPageComponent implements OnInit {
       this.paginator._intl.nextPageLabel = 'Página siguiente';
     },500);
   }
+
+  public getTipoHabitacion(tipo: number): string {
+    const tipos: { [key: number]: string } = {
+      1: 'Sencilla',
+      2: 'Matrimonial',
+      3: 'Doble'
+    };
+    return tipos[tipo] || 'Desconocido';
+  }
 }
 
 export interface DatosHabitacion {
   id: number;
   numero: number;
-  tipo: string;
+  tipo: number;
   precio: number;
   disponible: boolean;
   imagen: string;
